@@ -3,10 +3,10 @@ package com.github.a_soltysik;
 public class SimpleCar implements Comparable<SimpleCar> {
     private final String manufacturer;
     private final String model;
-    private final short yearOfProduction;
-    private final short power;
+    private final int yearOfProduction;
+    private final int power;
 
-    public SimpleCar(String manufacturer, String model, short yearOfProduction, short power) {
+    public SimpleCar(String manufacturer, String model, int yearOfProduction, int power) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.yearOfProduction = yearOfProduction;
@@ -21,11 +21,11 @@ public class SimpleCar implements Comparable<SimpleCar> {
         return model;
     }
 
-    public short getYearOfProduction() {
+    public int getYearOfProduction() {
         return yearOfProduction;
     }
 
-    public short getPower() {
+    public int getPower() {
         return power;
     }
 

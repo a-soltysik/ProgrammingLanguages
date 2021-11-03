@@ -17,7 +17,7 @@ public class Car extends SimpleCar {
                     .thenComparing(SimpleCar::getModel)
                     .thenComparingInt(SimpleCar::getPower);
 
-    public Car(String manufacturer, String model, short yearOfProduction, short power) {
+    public Car(String manufacturer, String model, int yearOfProduction, int power) {
         super(manufacturer, model, yearOfProduction, power);
     }
 
