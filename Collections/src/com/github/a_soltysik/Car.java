@@ -3,7 +3,19 @@ package com.github.a_soltysik;
 import java.util.Comparator;
 import java.util.Objects;
 
-public class Car extends SimpleCar{
+public class Car extends SimpleCar {
+
+    public static final Comparator<SimpleCar> MANUFACTURER_COMPARATOR =
+            Comparator.comparing(SimpleCar::getManufacturer)
+                    .thenComparing(SimpleCar::getModel)
+                    .thenComparingInt(SimpleCar::getYearOfProduction)
+                    .thenComparingInt(SimpleCar::getPower);
+
+    public static final Comparator<SimpleCar> YEAR_COMPARATOR =
+            Comparator.comparingInt(SimpleCar::getYearOfProduction)
+                    .thenComparing(SimpleCar::getManufacturer)
+                    .thenComparing(SimpleCar::getModel)
+                    .thenComparingInt(SimpleCar::getPower);
 
     public Car(String manufacturer, String model, short yearOfProduction, short power) {
         super(manufacturer, model, yearOfProduction, power);
@@ -23,21 +35,5 @@ public class Car extends SimpleCar{
     @Override
     public int hashCode() {
         return Objects.hash(getManufacturer(), getModel(), getYearOfProduction(), getPower());
-    }
-
-    public static class ManufacturerComparator implements Comparator<SimpleCar> {
-
-        @Override
-        public int compare(SimpleCar o1, SimpleCar o2) {
-            return o1.getManufacturer().compareToIgnoreCase(o2.getManufacturer());
-        }
-    }
-
-    public static class PowerComparator implements Comparator<SimpleCar> {
-
-        @Override
-        public int compare(SimpleCar o1, SimpleCar o2) {
-            return Short.compare(o1.getPower(), o2.getPower());
-        }
     }
 }
