@@ -228,15 +228,17 @@ public class ConsoleApp {
             case LIST -> file.write(currentList);
             case MAP, MAP_COMP -> file.write(currentMap);
         }
-        file.write("\n");
+        file.write("");
     }
 
     private void printData() {
+        console.printLine(currentMode.name() + ":");
         switch (currentMode) {
             case SET, SET_COMP -> console.printLine(Utils.toString(currentSet));
             case LIST -> console.printLine(Utils.toString(currentList));
             case MAP, MAP_COMP -> console.printLine(Utils.toString(currentMap));
         }
+        console.printLine("");
     }
 
     private enum Mode {

@@ -14,6 +14,7 @@ public class Utils {
 
     public static <K, V> String toString(Map<? extends K, ? extends V> map) {
         StringBuilder sb = new StringBuilder();
+        sb.append(map.getClass().getName()).append(":\n");
         sb.append('{');
         var it = map.entrySet().iterator();
         while (it.hasNext()) {
@@ -29,6 +30,7 @@ public class Utils {
 
     public static <T> String toString(Collection<T> collection) {
         StringBuilder sb = new StringBuilder();
+        sb.append(collection.getClass().getName()).append(":\n");
         sb.append('[');
         var it = collection.iterator();
         while (it.hasNext()) {
