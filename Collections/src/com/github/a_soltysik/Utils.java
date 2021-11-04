@@ -16,7 +16,7 @@ public class Utils {
         FileOutputStream outputStream = new FileOutputStream(file);
         PrintWriter writer = new PrintWriter(outputStream, append);
 
-        writer.println(collectionToString(collection));
+        writer.println(toString(collection));
 
         writer.close();
     }
@@ -26,12 +26,16 @@ public class Utils {
         FileOutputStream outputStream = new FileOutputStream(file);
         PrintWriter writer = new PrintWriter(outputStream, append);
 
-        writer.println(mapToString(map));
+        writer.println(toString(map));
 
         writer.close();
     }
 
-    public static <K, V> String mapToString(Map<? extends K, ? extends V> map) {
+    public static void deleteFile(String fileName) {
+        new File(fileName).delete();
+    }
+
+    public static <K, V> String toString(Map<? extends K, ? extends V> map) {
         StringBuilder sb = new StringBuilder();
         sb.append('{');
         var it = map.entrySet().iterator();
@@ -46,7 +50,7 @@ public class Utils {
         return sb.toString();
     }
 
-    public static <T> String collectionToString(Collection<T> collection) {
+    public static <T> String toString(Collection<T> collection) {
         StringBuilder sb = new StringBuilder();
         sb.append('[');
         var it = collection.iterator();
