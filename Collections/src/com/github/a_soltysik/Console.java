@@ -28,7 +28,6 @@ public class Console {
     }
 
     public int requestInt(String message) {
-        print(message);
         while (true) {
             try {
                 return Integer.parseInt(requestString(message));
