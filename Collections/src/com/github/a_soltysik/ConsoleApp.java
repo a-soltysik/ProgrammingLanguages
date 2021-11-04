@@ -38,6 +38,7 @@ public class ConsoleApp {
                     """;
 
     Console console = new Console();
+    FileWriter file = new FileWriter();
 
     Set<SimpleCar> currentSet;
     List<SimpleCar> currentList;
@@ -46,7 +47,11 @@ public class ConsoleApp {
     Mode currentMode;
 
     public void init() {
-        Utils.deleteFile(FILE_NAME);
+        try {
+            file.open(FILE_NAME, false);
+        } catch (FileNotFoundException e) {
+            console.printError("Nie udało się otworzyć pliku");
+        }
         while (true) {
             collectionMenu();
         }
@@ -87,10 +92,13 @@ public class ConsoleApp {
                 currentMap = new TreeMap<>(Car.YEAR_COMPARATOR);
                 currentMode = Mode.MAP_COMP;
             }
-            case 9 -> System.exit(0);
+            case 9 -> {
+                file.close();
+                System.exit(0);
+            }
             default -> collectionMenu();
         }
-        while (!scenarioMenu());
+        while (!scenarioMenu()) ;
     }
 
     private boolean scenarioMenu() {
@@ -214,15 +222,13 @@ public class ConsoleApp {
     }
 
     private void writeDataToFile() {
-        try {
-            switch (currentMode) {
-                case SET, SET_COMP -> Utils.writeToFile(FILE_NAME, currentSet, true);
-                case LIST -> Utils.writeToFile(FILE_NAME, currentList, true);
-                case MAP, MAP_COMP -> Utils.writeToFile(FILE_NAME, currentMap, true);
-            }
-        } catch (FileNotFoundException e) {
-            console.printError(e.getMessage());
+        file.write(currentMode.name() + ":");
+        switch (currentMode) {
+            case SET, SET_COMP -> file.write(currentSet);
+            case LIST -> file.write(currentList);
+            case MAP, MAP_COMP -> file.write(currentMap);
         }
+        file.write("\n");
     }
 
     private void printData() {

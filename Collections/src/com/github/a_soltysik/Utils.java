@@ -11,29 +11,6 @@ public class Utils {
     private Utils() {
 
     }
-    public static <T> void writeToFile(String fileName, Collection<? extends T> collection, boolean append) throws FileNotFoundException {
-        File file = new File(fileName);
-        FileOutputStream outputStream = new FileOutputStream(file);
-        PrintWriter writer = new PrintWriter(outputStream, append);
-
-        writer.println(toString(collection));
-
-        writer.close();
-    }
-
-    public static <K, V> void writeToFile(String fileName, Map<? extends K, ? extends V> map, boolean append) throws FileNotFoundException {
-        File file = new File(fileName);
-        FileOutputStream outputStream = new FileOutputStream(file);
-        PrintWriter writer = new PrintWriter(outputStream, append);
-
-        writer.println(toString(map));
-
-        writer.close();
-    }
-
-    public static void deleteFile(String fileName) {
-        new File(fileName).delete();
-    }
 
     public static <K, V> String toString(Map<? extends K, ? extends V> map) {
         StringBuilder sb = new StringBuilder();
