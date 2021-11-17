@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class UserDataBase {
-    private final HashMap<String, String> data = new HashMap<>();
+    private final HashMap<String, char[]> data = new HashMap<>();
 
     public UserDataBase() {
 
@@ -16,16 +16,16 @@ public class UserDataBase {
         }
     }
 
-    public void addUser(String username, String password) {
+    public void addUser(String username, char[] password) {
         data.put(username, password);
     }
 
     public boolean checkUser(String username, char[] password) {
-        String value = data.get(username);
+        char[] value = data.get(username);
         boolean result = (value != null);
 
         if (result) {
-            result = Arrays.equals(password, value.toCharArray());
+            result = Arrays.equals(password, value);
         }
         clearPassword(password);
         return result;
@@ -36,8 +36,8 @@ public class UserDataBase {
     }
 
    private void fillDemoDataBase() {
-        addUser("Andrzej", "12345678");
-        addUser("Student", "abcdefg");
-        addUser("Guest", "1111");
+        addUser("Andrzej", "12345678".toCharArray());
+        addUser("Student", "abcdefg".toCharArray());
+        addUser("Guest", "1111".toCharArray());
     }
 }
