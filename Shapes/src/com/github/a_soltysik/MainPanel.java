@@ -9,7 +9,7 @@ import java.awt.geom.Rectangle2D;
 
 public class MainPanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
     private Shape chosenShape;
-    private Point chosenPoint = new Point(0, 0);
+    private Point chosenPoint;
     private final RunningButton runningButton;
 
     public MainPanel(int width, int height) {
@@ -77,6 +77,8 @@ public class MainPanel extends JPanel implements MouseListener, MouseMotionListe
 
     @Override
     public void keyPressed(KeyEvent e) {
+        if (chosenPoint == null)
+            return;
         switch (e.getKeyCode()) {
             case KeyEvent.VK_K -> chosenShape = new Rectangle2D.Float(chosenPoint.x, chosenPoint.y, 50f, 50f);
             case KeyEvent.VK_O -> chosenShape = new Ellipse2D.Float(chosenPoint.x, chosenPoint.y, 70f, 50f);
