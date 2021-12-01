@@ -2,22 +2,36 @@ package com.github.a_soltysik;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 
-public class MainPanel extends JPanel implements MouseListener, KeyListener {
+public class MainPanel extends JPanel implements MouseListener, MouseMotionListener, KeyListener {
     private Shape chosenShape;
     private Point chosenPoint = new Point(0, 0);
+    private final RunningButton runningButton;
 
-    public MainPanel() {
+    public MainPanel(int width, int height) {
         super();
         addMouseListener(this);
         addKeyListener(this);
+        addMouseMotionListener(this);
+        setLayout(null);
+        setPreferredSize(new Dimension(width, height));
+
+        runningButton = new RunningButton(new Point(0, getPreferredSize().height - 100), new Point(0, 0));
+
+        JButton resetButton = new JButton("Reset");
+        resetButton.setBounds(getPreferredSize().width - 150, getPreferredSize().height - 100, 150, 50);
+        resetButton.addActionListener(e -> {
+            runningButton.reset();
+            repaint();
+            requestFocus();
+        });
+
+        add(runningButton);
+        add(resetButton);
     }
 
     @Override
@@ -73,5 +87,54 @@ public class MainPanel extends JPanel implements MouseListener, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
 
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        int safeDistance = 20;
+        Rectangle bounds = runningButton.getBounds();
+        Rectangle safeArea = new Rectangle(
+                bounds.x - safeDistance,
+                bounds.y - safeDistance,
+                bounds.width + 2 * safeDistance,
+                bounds.height + 2 * safeDistance
+        );
+        System.out.println(safeArea);
+        if (safeArea.contains(e.getPoint())) {
+            runningButton.run();
+        }
+    }
+
+    private static class RunningButton extends JButton {
+        private final Point position1;
+        private final Point position2;
+        private final int width = 150;
+        private final int height = 50;
+        private int positionNumber = 1;
+
+        public RunningButton(Point position1, Point position2) {
+            super("Kliknij mnie!");
+            this.position1 = position1;
+            this.position2 = position2;
+            setBounds(position1.x, position1.y, width, height);
+        }
+        public void run() {
+            if (positionNumber == 1) {
+                setBounds(position2.x, position2.y, width, height);
+                positionNumber = 2;
+            }
+            else {
+                reset();
+            }
+        }
+        public void reset() {
+            setBounds(position1.x, position1.y, width, height);
+            positionNumber = 1;
+        }
     }
 }
